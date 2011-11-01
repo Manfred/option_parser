@@ -16,9 +16,10 @@ class OptionParser
     switch   = nil
     
     for value in argv
+      bytes = value.respond_to?(:bytes) ? value.bytes.first(2) : [value[0], value[1]]
       # value is a switch
-      if value[0] == 45
-        switch = value.slice((value[1] == 45 ? 2 : 1)..-1)
+      if bytes[0] == 45
+        switch = value.slice((bytes[1] == 45 ? 2 : 1)..-1)
         options[switch] = nil
       else
         if switch
