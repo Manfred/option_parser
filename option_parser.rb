@@ -1,4 +1,6 @@
-# Copyright (c) 2010, Fingertips, Manfred Stienstra <manfred@fngtps.com>
+# frozen_string_literal: true
+
+# Copyright (c) Fingertips, Manfred Stienstra <manfred@fngtps.com>
 # License: http://www.opensource.org/licenses/mit-license.php
 
 # Parser for command line options
@@ -9,13 +11,13 @@ class OptionParser
   #   OptionParser.parse(%w(create --username manfred)) #=>
   #     [{"username"=>"manfred"}, ["create"]]
   def self.parse(argv)
-    return [{},[]] if argv.empty?
-    
+    return [{}, []] if argv.empty?
+
     options  = {}
     rest     = []
     switch   = nil
-    
-    for value in argv
+
+    argv.each do |value|
       bytes = value.respond_to?(:bytes) ? value.bytes.first(2) : [value[0], value[1]]
       # value is a switch
       if bytes[0] == 45
@@ -32,7 +34,7 @@ class OptionParser
         end
       end
     end
-    
+
     [options, rest]
   end
 end
