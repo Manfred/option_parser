@@ -1,14 +1,14 @@
 # frozen_string_literal: true
 
-# Copyright (c) 2010, Fingertips, Manfred Stienstra <manfred@fngtps.com>
+# Copyright (c) Fingertips, Manfred Stienstra <manfred@fngtps.com>
 # License: http://www.opensource.org/licenses/mit-license.php
 
-require 'test/unit'
+require 'minitest/autorun'
 require 'benchmark'
 
-require 'option_parser'
+require_relative 'option_parser'
 
-class OptionParserTest < Test::Unit::TestCase
+class OptionParserTest < Minitest::Test
   EXAMPLES = [
     [%w[], {}, %w[]],
     [%w[create], {}, %w[create]],
