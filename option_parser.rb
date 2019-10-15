@@ -13,22 +13,25 @@ class OptionParser
   def self.parse(argv)
     return [{}, []] if argv.empty?
 
-    options  = {}
-    rest     = []
-    switch   = nil
+    options = {}
+    rest = []
+    name = nil
 
+    # An array of arguments can contain three types of values:
+    #
+    # 1. A switch name, which starts with --.
+    # 2. A switch value, when the last value was a switch.
+    # 3. An argument that does not belong to a switch.
     argv.each do |value|
-      bytes = value.respond_to?(:bytes) ? value.bytes.first(2) : [value[0], value[1]]
-      # value is a switch
+      bytes = value.bytes.first(2)
+      # If the value start with '-', it's a switch.
       if bytes[0] == 45
-        switch = value.slice((bytes[1] == 45 ? 2 : 1)..-1)
-        options[switch] = nil
+        name = value.slice((bytes[1] == 45 ? 2 : 1)..-1)
+        options[name] = nil
       else
-        if switch
-          # we encountered another switch so this
-          # value belongs to the last switch
-          options[switch] = value
-          switch = nil
+        if name
+          options[name] = value
+          name = nil
         else
           rest << value
         end
